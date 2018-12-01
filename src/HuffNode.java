@@ -59,4 +59,21 @@ public class HuffNode implements Comparable<HuffNode> {
 	public String toString() {
 		return Character.toString((char)myValue);
 	}
+	
+	public int getValue() {
+		return myValue;
+	}
+	
+	public int getWeight() {
+		return myWeight;
+	}
+	
+	public HuffNode getLeft() {
+		return myLeft;
+	}
+	
+	public HuffNode getRight() {
+		return myRight;
+	}
+	
 }
