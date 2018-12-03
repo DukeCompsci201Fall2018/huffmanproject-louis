@@ -29,9 +29,17 @@ public class HuffMainDecompress extends HuffProcessor {
 	}
 	
 	public void decompress(BitInputStream in, BitOutputStream out) {
-		if(in.readBits(BITS_PER_INT) != HUFF_NUMBER)
-			throw new HuffException("Illegal header");
+		if(in.readBits(BITS_PER_INT) != HUFF_NUMBER) {
+			throw new HuffException("Illegal Header");
+		}
+		
 		HuffNode root = readHeader(in);
+		readCompressedBits(root, in, out);
+		out.close();
+	}
+		
+	private void readCompressedBits(HuffNode root, BitInputStream in, BitOutputStream out) {
+		// TODO Auto-generated method stub
 		HuffNode current = root;
 		while(true){
 			int bits = in.readBits(1);
@@ -39,12 +47,9 @@ public class HuffMainDecompress extends HuffProcessor {
 				 throw new HuffException("bad input, no PSEUDO_EOF");
 			}
 			else { 
-				if (bits ==0) {
-					current = current.getLeft();
-				}
-				else {
-					current = current.getRight();
-				}
+				if (bits ==0)current = current.getLeft();
+				else current = current.getRight();
+
 				if(current.getLeft() == null && current.getRight() == null){
 					if(current.getValue() == PSEUDO_EOF) {
 						break;
@@ -56,8 +61,9 @@ public class HuffMainDecompress extends HuffProcessor {
 			}
 		}
 	}
-}
-	
+		
+	}
+
 	private HuffNode readHeader(BitInputStream in){
 		if(in.readBits(1) == -1) {
 			throw new HuffException("Wrong file");
@@ -65,10 +71,10 @@ public class HuffMainDecompress extends HuffProcessor {
 		if(in.readBits(1) == 0){
 			HuffNode left = readHeader(in);
 			HuffNode right = readHeader(in);
-			return new HuffNode(-1, 0, left, right);
+			return new HuffNode(0, 0, left, right);
 		} else {
 			int value = in.readBits(BITS_PER_WORD+1);
-			return new HuffNode(value, 0);
+			return new HuffNode(value, 0, null, null);
 		}
 }
 }

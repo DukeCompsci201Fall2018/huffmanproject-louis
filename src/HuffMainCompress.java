@@ -66,8 +66,7 @@ public class HuffMainCompress extends HuffProcessor {
 			out.writeBits(code.length(), Integer.parseInt(code, 2));
 		}
 		String code = codings[PSEUDO_EOF];
-		out.writeBits(code.length(), Integer.parseInt(code, 2));
-		
+		out.writeBits(code.length(), Integer.parseInt(code, 2));		
 	}
 	
 	// helper methods 
