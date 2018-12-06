@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.PriorityQueue;
 
-public class HuffMainCompress extends HuffProcessor {
+public class HuffMainCompress {
 	public static void main(String[] args) {
 		
 		System.out.println("Huffman Compress Main");
